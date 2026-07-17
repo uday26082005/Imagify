@@ -1,4 +1,4 @@
-# Imagify
+# Pixora
 
 
 A **full-stack AI web application** that transforms your **text prompts into stunning images** using cutting-edge AI models.
@@ -32,8 +32,8 @@ Built with the **MERN stack** (MongoDB, Express.js, React, Node.js), styled usin
 ### 🔹 Clone the Repository
 
 ```bash
-git clone https://github.com/uday26082005/Imagify.git
-cd Imagify
+git clone https://github.com/uday26082005/Pixora.git
+cd Pixora
 ```
 
 ---
@@ -135,7 +135,7 @@ npm run server
 6. In `mongodb.js`, connect using:
 
    ```js
-   await mongoose.connect(`${process.env.MONGODB_URI}/Imagify`);
+   await mongoose.connect(`${process.env.MONGODB_URI}/Pixora`);
    ```
 
 ---
