@@ -53,21 +53,12 @@ export const generateImage = async (req, res) => {
     // Clean up prompt by removing the aspect ratio text so it doesn't confuse the AI
     const cleanPrompt = prompt.replace(ratioRegex, '').trim();
 
-    // Calling Hugging Face API
-    const { data } = await axios.post(
-      'https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0',
-      {
-        inputs: cleanPrompt,
-        parameters: { width, height }
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        responseType: 'arraybuffer'
-      }
-    )
+    // Calling Pollinations API (Free, no limits, no API key needed)
+    const encodedPrompt = encodeURIComponent(cleanPrompt);
+    const { data } = await axios.get(
+      `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&nologo=true`,
+      { responseType: 'arraybuffer' }
+    );
 
     // Conversion of buffer to base64
     const base64Image = Buffer.from(data, 'binary').toString('base64');
