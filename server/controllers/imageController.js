@@ -27,29 +27,12 @@ export const generateImage = async (req, res) => {
     const formdata = new FormData()
     formdata.append('prompt', prompt)
 
-    // Parse prompt for aspect ratio natively supported by Stability AI
-    const validRatios = ['16:9', '1:1', '21:9', '2:3', '3:2', '4:5', '5:4', '9:16', '9:21'];
-    let aspectRatio = '1:1'; // Default
-    
-    // Look for phrases like "16:9", "ar 16:9", "--ar 16:9"
-    const ratioRegex = /(?:ar\s+|--ar\s+)?(\d+:\d+)/i;
-    const match = prompt.match(ratioRegex);
-    
-    if (match && validRatios.includes(match[1])) {
-      aspectRatio = match[1];
-    }
-    
-    formdata.append('aspect_ratio', aspectRatio);
-    formdata.append('output_format', 'png');
-
-    // Calling Stability AI API
-    const { data } = await axios.post('https://api.stability.ai/v2beta/stable-image/generate/core', formdata, {
+    // Calling Clipdrop API
+    const { data } = await axios.post('https://clipdrop-api.co/text-to-image/v1', formdata, {
       headers: {
-        'Authorization': `Bearer ${process.env.STABILITY_API_KEY}`,
-        'Accept': 'image/*',
-        ...formdata.getHeaders()
+        'x-api-key': process.env.CLIPDROP_API,
       },
-      responseType: "arraybuffer"
+      responseType: 'arraybuffer'
     })
 
     // Conversion of buffer to base64
