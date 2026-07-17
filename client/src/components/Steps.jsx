@@ -15,20 +15,20 @@ const Steps = () => {
     >
 
 
-      <h1 className="text-3xl sm:text-4xl font-semibold mb-2">
+      <h1 className="text-3xl sm:text-4xl font-semibold mb-2 dark:text-white">
         How it works
       </h1>
-      <p className="text-lg text-gray-600 mb-8">
+      <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
         Transform Words Into Stunning Images
       </p>
 
       <div className="space-y-4 w-full max-w-3xl text-sm" >
         {stepsData.map((item, index) => (
-          <div key={index} className="flex items-center gap-4 p-5 px-8 bg-white/20 rounded-lg shadow-md border cursor-pointer hover:scale-[1.02] transition-all duration-300" >
+          <div key={index} className="flex items-center gap-4 p-5 px-8 glass-effect rounded-xl cursor-pointer hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)] transition-all duration-500" >
             <img width={40} src={item.icon} alt="" />
             <div>
-              <h2 className="text-xl font-medium">{item.title}</h2>
-              <p className="text-gray-500">
+              <h2 className="text-xl font-medium dark:text-white">{item.title}</h2>
+              <p className="text-gray-500 dark:text-gray-400">
                 {item.description}
               </p>
             </div>

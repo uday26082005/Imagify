@@ -13,8 +13,8 @@ const BuyCredit = () => {
   const navigate = useNavigate()
 
 
-  const initPay = async (order) => {
 
+  const initPay = async (order) => {
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -24,9 +24,7 @@ const BuyCredit = () => {
       order_id: order.id,
       receipt: order.receipt,
       handler: async (response) => {
-
         try {
-
           const { data } = await axios.post(backendUrl + '/api/user/verify-razor', response, { headers: { token } })
           if (data.success) {
             loadCreditsData()
@@ -36,22 +34,18 @@ const BuyCredit = () => {
         } catch (error) {
           toast.error(error.message)
         }
-
       }
     }
-
     const rzp = new window.Razorpay(options)
     rzp.open()
-
   }
 
   const paymentRazorpay = async (planId) => {
     try {
-
       if (!user) {
         setShowLogin(true)
+        return
       }
-
       const { data } = await axios.post(backendUrl + '/api/user/pay-razor', { planId }, { headers: { token } })
       if (data.success) {
         initPay(data.order)
@@ -61,21 +55,7 @@ const BuyCredit = () => {
     }
   }
 
-  const paymentStripe = async (planId) => {
-    try {
 
-      const { data } = await axios.post(backendUrl + '/api/user/pay-stripe', { planId }, { headers: { token } })
-      if (data.success) {
-        const { session_url } = data
-        window.location.replace(session_url)
-      } else {
-        toast.error(data.message)
-      }
-    } catch (error) {
-      console.log(error)
-      toast.error(error.message)
-    }
-  }
 
   return (
     <motion.div className='min-h-[80vh] text-center pt-14 mb-10'
@@ -84,22 +64,21 @@ const BuyCredit = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
     >
-      <button className='border border-gray-400 px-10 py-2 rounded-full mb-6'>Our Plans</button>
-      <h1 className='text-center text-3xl font-medium mb-6 sm:mb-10'>Choose the plan </h1>
+      <button className='border border-gray-400 dark:border-neutral-700 dark:text-gray-300 px-10 py-2 rounded-full mb-6'>Our Plans</button>
+      <h1 className='text-center text-3xl font-medium mb-6 sm:mb-10 dark:text-white'>Choose the plan </h1>
       <div className='flex flex-wrap justify-center gap-6 text-left'>
         {plans.map((item, index) => (
-          <div className='bg-white drop-shadow-sm border rounded-lg py-12 px-8 text-gray-600 hover:scale-105 transition-all duration-500' key={index}>
-            <img width={40} src={assets.logo_icon} alt="" />
-            <p className='mt-3 mb-1 font-semibold'>{item.id}</p>
+          <div className='glass-effect rounded-xl py-12 px-8 text-gray-600 dark:text-gray-300 hover:scale-105 hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)] transition-all duration-500' key={index}>
+            <img width={56} src="/favicon.png" alt="Plan Icon" className="rounded-md drop-shadow-sm" />
+            <p className='mt-3 mb-1 font-semibold dark:text-white'>{item.id}</p>
             <p className='text-sm'>{item.desc}</p>
             <p className='mt-6'>
               <span className='text-3xl font-medium'>₹{item.price}</span>/ {item.credits} credits
             </p>
-            <div className='flex flex-col mt-4'>
-              <button onClick={() => paymentRazorpay(item.id)} className='w-full flex justify-center gap-2 border border-gray-400 mt-2 text-sm rounded-md py-2.5 min-w-52 hover:bg-blue-50 hover:border-blue-400'>
-                <img className='h-4' src={assets.razorpay_logo} alt="" />
+            <div className='flex flex-col mt-4 gap-2'>
+              <button onClick={() => paymentRazorpay(item.id)} className='w-full flex justify-center gap-2 border border-gray-400 dark:border-neutral-700 mt-2 text-sm rounded-md py-2.5 min-w-52 hover:bg-blue-50 dark:hover:bg-neutral-800'>
+                <img className='h-4 dark:brightness-0 dark:invert' src={assets.razorpay_logo} alt="Razorpay" />
               </button>
-              
             </div>
           </div>
         ))}

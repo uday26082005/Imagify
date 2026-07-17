@@ -27,7 +27,7 @@ const Header = () => {
             viewport={{ once: true }}
         >
             <motion.div
-                className='text-stone-500 inline-flex items-center gap-2 bg-white px-6 py-1 rounded-full border border-neutral-500'
+                className='text-stone-500 dark:text-gray-300 inline-flex items-center gap-2 bg-white dark:bg-neutral-900 px-6 py-1 rounded-full border border-neutral-500 dark:border-neutral-700'
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.8 }}
@@ -37,16 +37,16 @@ const Header = () => {
             </motion.div>
 
             <motion.h1
-                className='text-center mx-auto mt-10 text-4xl max-w-[300px] sm:text-7xl sm:max-w-[590px]'
+                className='text-center mx-auto mt-10 text-4xl max-w-[300px] sm:text-7xl sm:max-w-[590px] dark:text-white'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 2 }}
             >
-                Turn text to <span className='text-blue-600'>image</span>, in seconds.
+                Turn text to <span className='text-blue-600 dark:text-blue-400'>image</span>, in seconds.
             </motion.h1>
 
             <motion.p
-                className='text-center max-w-xl mx-auto mt-5'
+                className='text-center max-w-xl mx-auto mt-5 dark:text-gray-300'
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
@@ -55,7 +55,7 @@ const Header = () => {
             </motion.p>
 
             <motion.button
-                className='sm:text-lg text-white bg-black w-auto mt-8 px-12 py-2.5 flex items-center gap-2 rounded-full'
+                className='sm:text-lg text-white bg-black dark:bg-white dark:text-black w-auto mt-8 px-12 py-2.5 flex items-center gap-2 rounded-full'
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0 }}
@@ -91,12 +91,12 @@ const Header = () => {
             </motion.div>
 
             <motion.p
-                className='mt-2 text-neutral-600'
+                className='mt-2 text-neutral-600 dark:text-gray-400'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 0.8 }}
             >
-                Generated images from imagify
+                Generated images from Pixora
             </motion.p>
         </motion.div>
     )
@@ -130,7 +130,7 @@ export default Header
 //                     <img className='rounded hover:scale-105 transition-all duration-300 cursor-pointer' width={70} key={index} src={index % 2 === 0 ? assets.sample_img_2 : assets.sample_img_1} />
 //                 ))}
 //             </div>
-//             <p className='mt-2 text-neutral-600'>Generated images from imagify</p>
+//             <p className='mt-2 text-neutral-600'>Generated images from Pixora</p>
 //         </div>
 //     )
 // }

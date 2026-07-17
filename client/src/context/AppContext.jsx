@@ -10,6 +10,7 @@ const AppContextProvider = (props) => {
     const [showLogin, setShowLogin] = useState(false)
     const [token, setToken] = useState(localStorage.getItem('token'))
     const [user, setUser] = useState(null)
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
 
     const [credit, setCredit] = useState(false)
 
@@ -64,9 +65,24 @@ const AppContextProvider = (props) => {
         }
     },[token])
 
+    const toggleTheme = () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light'
+        setTheme(newTheme)
+        localStorage.setItem('theme', newTheme)
+    }
+
+    useEffect(() => {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    }, [theme])
+
     const value = {
         token, setToken,
         user, setUser,
+        theme, toggleTheme,
         showLogin, setShowLogin,
         credit, setCredit,
         loadCreditsData,

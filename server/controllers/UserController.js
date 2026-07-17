@@ -20,6 +20,12 @@ const registerUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt)
 
+        // checking if user already exists
+        const existingUser = await userModel.findOne({ email });
+        if (existingUser) {
+            return res.json({ success: false, message: 'User already exists' });
+        }
+
         const userData = {
             name,
             email,
@@ -145,7 +151,7 @@ const paymentRazorpay = async (req, res) => {
         const options = {
             amount: amount * 100,
             currency: process.env.CURRENCY,
-            receipt: newTransaction._id,
+            receipt: String(newTransaction._id),
         }
 
         // Creating razorpay Order
@@ -318,5 +324,62 @@ const verifyStripe = async (req, res) => {
     }
 }
 
+// Mock Payment API to add credits directly
+const paymentMock = async (req, res) => {
+    try {
+        const { userId, planId } = req.body
 
-export { registerUser, loginUser, userCredits, paymentRazorpay, verifyRazorpay, paymentStripe, verifyStripe }
+        const userData = await userModel.findById(userId)
+
+        if (!userData || !planId) {
+            return res.json({ success: false, message: 'Invalid Credentials' })
+        }
+
+        let credits, plan, amount, date
+
+        switch (planId) {
+            case 'Basic':
+                plan = 'Basic'
+                credits = 100
+                amount = 10
+                break;
+            case 'Advanced':
+                plan = 'Advanced'
+                credits = 500
+                amount = 50
+                break;
+            case 'Business':
+                plan = 'Business'
+                credits = 5000
+                amount = 250
+                break;
+            default:
+                return res.json({ success: false, message: 'plan not found' })
+        }
+
+        date = Date.now()
+
+        const transactionData = {
+            userId,
+            plan,
+            amount,
+            credits,
+            date,
+            payment: true
+        }
+
+        await transactionModel.create(transactionData)
+
+        const creditBalance = userData.creditBalance + credits
+        await userModel.findByIdAndUpdate(userData._id, { creditBalance })
+
+        res.json({ success: true, message: "Credits Added (Mock)" });
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+}
+
+
+export { registerUser, loginUser, userCredits, paymentRazorpay, verifyRazorpay, paymentStripe, verifyStripe, paymentMock }

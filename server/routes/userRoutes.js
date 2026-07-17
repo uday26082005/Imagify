@@ -6,7 +6,8 @@ import {
     registerUser,
     loginUser,
     paymentStripe,
-    verifyStripe
+    verifyStripe,
+    paymentMock
 } from '../controllers/UserController.js'
 import authUser from '../middlewares/auth.js'
 
@@ -19,5 +20,6 @@ userRouter.post('/pay-razor', authUser, paymentRazorpay)
 userRouter.post('/verify-razor', verifyRazorpay)
 userRouter.post('/pay-stripe', authUser, paymentStripe)
 userRouter.post('/verify-stripe', authUser, verifyStripe)
+userRouter.post('/pay-mock', authUser, paymentMock)
 
 export default userRouter
