@@ -113,20 +113,20 @@ const paymentRazorpay = async (req, res) => {
         switch (planId) {
             case 'Basic':
                 plan = 'Basic'
-                credits = 100
+                credits = 5
                 amount = 10
                 break;
 
             case 'Advanced':
                 plan = 'Advanced'
-                credits = 500
+                credits = 30
                 amount = 50
                 break;
 
             case 'Business':
                 plan = 'Business'
-                credits = 5000
-                amount = 250
+                credits = 65
+                amount = 100
                 break;
 
             default:
@@ -230,20 +230,20 @@ const paymentStripe = async (req, res) => {
         switch (planId) {
             case 'Basic':
                 plan = 'Basic'
-                credits = 100
+                credits = 5
                 amount = 10
                 break;
 
             case 'Advanced':
                 plan = 'Advanced'
-                credits = 500
+                credits = 30
                 amount = 50
                 break;
 
             case 'Business':
                 plan = 'Business'
-                credits = 5000
-                amount = 250
+                credits = 65
+                amount = 100
                 break;
 
             default:
@@ -342,18 +342,18 @@ const paymentMock = async (req, res) => {
         switch (planId) {
             case 'Basic':
                 plan = 'Basic'
-                credits = 100
+                credits = 5
                 amount = 10
                 break;
             case 'Advanced':
                 plan = 'Advanced'
-                credits = 500
+                credits = 30
                 amount = 50
                 break;
             case 'Business':
                 plan = 'Business'
-                credits = 5000
-                amount = 250
+                credits = 65
+                amount = 100
                 break;
             default:
                 return res.json({ success: false, message: 'plan not found' })
